@@ -17,6 +17,7 @@ Before scaling to thousands of concurrent users, basic protocol errors, poor tim
 | `005` | [Environment Config and the 12-Factor App](005-environment-config-and-the-12-factor-app/README.md) | `beginner` | ✅ | 🟢 Published |
 | `006` | [Monolith vs Modular Monolith vs Microservices](006-monolith-vs-modular-monolith-vs-microservices/README.md) | `beginner` | ✅ | 🟢 Published |
 | `007` | [Input Validation and Sanitization](007-input-validation-and-sanitization/README.md) | `beginner` | ✅ | 🟢 Published |
+| `008` | [Pagination (Offset vs Cursor)](008-pagination-offset-vs-cursor/README.md) | `beginner` | ✅ | 🟢 Published |
 
 <!-- CONCEPT_TABLE_END -->
 
