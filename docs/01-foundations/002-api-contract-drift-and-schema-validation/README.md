@@ -19,7 +19,7 @@ last_reviewed: 2026-10-19
 
 ## The story
 
-In 2020, a popular ride-sharing mobile app pushed a backend update on a Friday afternoon.
+Consider a common production failure scenario: A team is building a ride-sharing mobile app and pushes a routine backend update on a Friday afternoon.
 
 A backend engineer wanted to clean up user data. They renamed a single field in the user profile endpoint from `phone_number` to `phoneNumber`.
 
@@ -27,11 +27,11 @@ On their local machine, everything worked because they updated both the frontend
 
 In production, things went wrong immediately:
 
-1. **Millions of old mobile apps were still running:** Users do not update mobile apps instantly. Millions of users were still running the version of the app from two weeks prior.
+1. **Millions of old mobile apps were still running:** Users do not update mobile apps instantly. Many users were still running a version of the app from two weeks prior.
 2. **The app crashed on startup:** The mobile app had code that looked like this: `user.phone_number.trim()`. Because `phone_number` was now missing, JavaScript evaluated `undefined.trim()` and crashed.
 3. **App crashes cannot be rolled back quickly:** The backend could roll back, but users whose apps had already crashed were stuck until the backend fix went live.
 
-A simple field rename caused over 100,000 app crashes and cost the team thousands of customer support tickets.
+A single field rename instantly crashes active mobile apps across the user base and halts operations.
 
 ---
 

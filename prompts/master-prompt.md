@@ -16,7 +16,7 @@ Follow the page template exactly (pasted below), including the frontmatter.
 
 Rules:
 - Audience: smart beginner with no prior knowledge. Define every term on first use.
-- Open with a short real-world failure story, then name the concept.
+- Open with a failure story. If citing a historical event, cite verified sources. Otherwise, frame it explicitly as a realistic hypothetical engineering scenario ("Consider this realistic engineering scenario..."). Never invent fake dates, companies, or statistics.
 - Use one everyday, non-technical analogy and reuse it through the page.
 - Include a Mermaid diagram of the main flow. Valid syntax, simple labels.
 - Code is Node.js with ES modules. demo.mjs must be a single file with zero

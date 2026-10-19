@@ -19,7 +19,7 @@ last_reviewed: 2026-10-19
 
 ## The story
 
-In 2021, an online store had a 4-hour checkout outage during a big sale. Over 30,000 shoppers tried to buy items with expired cards or invalid coupon codes.
+Consider this classic engineering scenario: An online store launches a major flash sale, and thousands of shoppers begin checking out with expired cards or invalid coupon codes.
 
 The developers wanted to be safe. They wrote code that caught every error and always returned `HTTP 200 OK` with a JSON message:
 
@@ -30,13 +30,13 @@ The developers wanted to be safe. They wrote code that caught every error and al
 }
 ```
 
-This tiny choice broke three separate systems at once:
+This tiny choice breaks three separate systems at once:
 
-1. **The monitoring dashboard went blind:** The team's alert system only checked the 3-digit status code. It saw `200 OK` on every single request. The dashboard showed 99.99% uptime. The team thought everything was running smoothly while 30,000 customers were unable to buy anything.
-2. **Caches saved the error:** The caching layer saw `200 OK` and assumed the response was good data. It saved the error page and served that same "Card declined" message to other shoppers who had not even entered their card details yet.
-3. **The mobile app gave up:** Mobile apps can automatically retry temporary server hiccups when they see a `503 Service Unavailable`. Because the API sent back `200 OK`, the app thought the conversation was finished and gave up immediately.
+1. **The monitoring dashboard goes blind:** The team's alert system only checks the 3-digit status code. It sees `200 OK` on every single request. The dashboard shows 99.99% uptime. The team thinks everything is running smoothly while thousands of customers are unable to buy anything.
+2. **Caches save the error:** The caching layer sees `200 OK` and assumes the response is good data. It saves the error page and serves that same "Card declined" message to other shoppers who have not even entered their card details yet.
+3. **The mobile app gives up:** Mobile apps can automatically retry temporary server hiccups when they see a `503 Service Unavailable`. Because the API sends back `200 OK`, the app thinks the conversation finished normally and gives up immediately.
 
-The company lost hundreds of thousands of dollars while their screens showed green checkmarks.
+The store loses sales and customer support gets flooded while internal dashboards display healthy green checkmarks.
 
 ---
 

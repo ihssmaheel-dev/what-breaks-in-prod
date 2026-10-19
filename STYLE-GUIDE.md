@@ -7,7 +7,7 @@ This document defines the writing, coding, and architectural standards for all c
 ## 1. Core Writing Principles
 
 1. **Write for someone smart but new.** Never use a term before defining it. If you introduce "latency" or "idempotency", explain what it means on the spot.
-2. **Story first.** Always open with the failure scenario (a duplicate charge, a locked database, a 3 AM outage) before revealing the name of the pattern.
+2. **Story first.** Always open with the failure scenario (a duplicate charge, a locked database, a 3 AM outage) before revealing the name of the pattern. If referencing a specific historical event, cite verified public sources. Otherwise, explicitly frame it as a realistic hypothetical engineering scenario ("Consider this realistic engineering scenario..."). Never invent fake dates, companies, or statistics.
 3. **One concept per page, one idea per section.** Each page must take between 5 to 8 minutes to read (800 to 1200 words, excluding code).
 4. **Analogy before technical detail.** Use everyday, non-technical comparisons (coffee shops, postal sorting centers, restaurants) and reuse that analogy throughout the entire page.
 5. **Show broken code and fixed code side by side.** Make the flaw unmistakable before presenting the solution.
