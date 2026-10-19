@@ -80,7 +80,7 @@ Every demo is self-contained and requires **zero package installations**:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/what-breaks-in-prod.git
+git clone https://github.com/ihssmaheel-dev/what-breaks-in-prod.git
 cd what-breaks-in-prod
 
 # Run any concept demo directly with Node.js
