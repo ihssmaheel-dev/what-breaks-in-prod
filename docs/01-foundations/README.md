@@ -10,7 +10,7 @@ Before scaling to thousands of concurrent users, basic protocol errors, poor tim
 <!-- CONCEPT_TABLE_START -->
 | ID | Concept | Level | Demo | Status |
 | :--- | :--- | :---: | :---: | :---: |
-| - | _Coming soon_ | - | - | ⚪ Planned |
+| `001` | [HTTP Status Codes and Error Semantics](001-http-status-codes-and-error-semantics/README.md) | `beginner` | ✅ | 🟢 Published |
 
 <!-- CONCEPT_TABLE_END -->
 

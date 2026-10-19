@@ -4,7 +4,7 @@
 > A zero-dependency, open-source guide teaching 157 backend and system design concepts through failure stories, real-world analogies, diagrams, and runnable code.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Concepts](https://img.shields.io/badge/concepts-0%2F157-blue)
+![Concepts](https://img.shields.io/badge/concepts-1%2F157-blue)
 ![Dependencies](https://img.shields.io/badge/dependencies-0-success)
 ![Node LTS](https://img.shields.io/badge/node-%3E%3D20-green)
 
@@ -46,7 +46,7 @@ Depending on your goal, jump directly into a curated reading path:
 <!-- PROGRESS_TABLE_START -->
 | # | Category | Planned | Published | Reviewed | Draft | Progress |
 | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
-| 01 | [Foundations](docs/01-foundations/README.md) | 12 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
+| 01 | [Foundations](docs/01-foundations/README.md) | 12 | 1 | 0 | 0 | `█░░░░░░░░░ 8%` |
 | 02 | [API Reliability](docs/02-api-reliability/README.md) | 16 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
 | 03 | [Performance & Caching](docs/03-performance-and-caching/README.md) | 12 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
 | 04 | [Databases](docs/04-databases/README.md) | 13 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
@@ -59,7 +59,7 @@ Depending on your goal, jump directly into a curated reading path:
 | 11 | [Scaling & Resilience](docs/11-scaling-and-resilience/README.md) | 12 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
 | 12 | [Observability & Operations](docs/12-observability-and-operations/README.md) | 14 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
 | 13 | [AI-Era Backend](docs/13-ai-era-backend/README.md) | 5 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
-| **All** | **Total** | **157** | **0** | **0** | **0** | **`░░░░░░░░░░ 0%`** |
+| **All** | **Total** | **157** | **1** | **0** | **0** | **`░░░░░░░░░░ 1%`** |
 
 <!-- PROGRESS_TABLE_END -->
 
@@ -68,7 +68,9 @@ Depending on your goal, jump directly into a curated reading path:
 ## Published Concepts Catalog
 
 <!-- CONCEPT_CATALOG_START -->
-_No concepts published yet. Run Phase 1 to generate the first batch._
+| ID | Concept | Category | Level | Demo | Status |
+| :--- | :--- | :--- | :---: | :---: | :---: |
+| `001` | [HTTP Status Codes and Error Semantics](docs/01-foundations/001-http-status-codes-and-error-semantics/README.md) | 01-foundations | `beginner` | ✅ | 🟢 Published |
 
 <!-- CONCEPT_CATALOG_END -->
 
