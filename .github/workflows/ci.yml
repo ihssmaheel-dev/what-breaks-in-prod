@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  verify:
+    name: Verify Demos & Index
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Verify all demos execute successfully
+        run: node scripts/check-demos.mjs
+
+      - name: Check index and progress tables
+        run: node scripts/build-index.mjs --check
+
+      - name: Check for uncommitted changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Working tree is dirty after running verification scripts. Please run 'node scripts/build-index.mjs' locally and commit changes."
+            git status --porcelain
+            exit 1
+          fi
