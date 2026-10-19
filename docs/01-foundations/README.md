@@ -11,6 +11,7 @@ Before scaling to thousands of concurrent users, basic protocol errors, poor tim
 | ID | Concept | Level | Demo | Status |
 | :--- | :--- | :---: | :---: | :---: |
 | `001` | [HTTP Status Codes and Error Semantics](001-http-status-codes-and-error-semantics/README.md) | `beginner` | ✅ | 🟢 Published |
+| `002` | [API Contract Drift and Schema Validation](002-api-contract-drift-and-schema-validation/README.md) | `beginner` | ✅ | 🟢 Published |
 
 <!-- CONCEPT_TABLE_END -->
 
