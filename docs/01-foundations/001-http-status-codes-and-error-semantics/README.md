@@ -202,6 +202,10 @@ The demo runs a small server on your machine and sends 3 test requests:
 2. It sends bad data to a fixed endpoint. The server sends back `422`. The monitoring counter records `Client Error: 1`. The issue is visible right away.
 3. It simulates an upstream server crash. The server sends back `502`. The monitoring counter records `Server Error: 1`, showing how real alerts get triggered.
 
+## The decision flow
+
+![Which HTTP Status Code Should You Return?](assets/http-status-decision-tree.svg)
+
 ---
 
 ## The 14 Status Codes You Will Use 99% of the Time

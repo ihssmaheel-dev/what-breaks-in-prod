@@ -49,5 +49,28 @@ A concept page is ready to publish only when:
 - [x] Claims and RFC references are verified against authoritative sources.
 - [x] All relative links resolve correctly.
 - [x] 3 self-test questions and 2 interview questions are answered accurately.
-- [x] A 5-line cheat sheet is included at the end.
 - [x] Frontmatter metadata is complete.
+
+---
+
+## 5. Visual Design System & Image Theme Guidelines
+
+Every image and diagram generated across **what-breaks-in-prod** must follow this exact visual theme. This ensures the entire repository looks like a single, cohesive, high-end technical reference.
+
+### Canvas & Theme Tokens
+- **Format:** Clean vector SVG (`assets/*.svg`) with responsive `viewBox`.
+- **Background Canvas:** Dark slate `#0d1117` (matches GitHub dark mode seamlessly, high contrast in light mode).
+- **Outer Frame:** 1px border `#30363d` with `rx="10"` rounded corners.
+- **Typography:** System font stack (`system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`).
+- **Brand Header Badge:** Standardized pill in the top-left: `[WHAT BREAKS IN PROD • CATEGORY • ID]`.
+
+### Standard Color Tokens
+- **Brand Accent / Headers:** Electric Indigo `#6366f1` / Sky `#38bdf8`
+- **Success / 2xx / Safe State:** Emerald Green text `#34d399`, stroke `#10b981`, badge background `#064e3b`
+- **Client Error / 4xx / Warning:** Amber text `#fbbf24`, stroke `#f59e0b`, badge background `#451a03`
+- **Server Error / 5xx / Crash / Broken:** Rose/Crimson text `#fda4af`, stroke `#f43f5e`, badge background `#4c0519`
+- **Card Containers:** Fill `#161b22`, stroke `#30363d`, border radius `8px`
+- **Primary Text:** White `#f8fafc` (titles, key values)
+- **Secondary Text:** Muted Slate `#94a3b8` (descriptions, hints)
+- **Flow Lines & Connectors:** Stroke `#475569`, width `2px`, filled arrowheads.
+
