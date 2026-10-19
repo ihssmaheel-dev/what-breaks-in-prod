@@ -14,6 +14,7 @@ Before scaling to thousands of concurrent users, basic protocol errors, poor tim
 | `002` | [API Contract Drift and Schema Validation](002-api-contract-drift-and-schema-validation/README.md) | `beginner` | ✅ | 🟢 Published |
 | `003` | [Serialization (JSON, Protobuf, and BigInt Precision)](003-serialization-json-protobuf-and-bigint-precision/README.md) | `beginner` | ✅ | 🟢 Published |
 | `004` | [Authentication vs Authorization (AuthN vs AuthZ)](004-authentication-vs-authorization/README.md) | `beginner` | ✅ | 🟢 Published |
+| `005` | [Environment Config and the 12-Factor App](005-environment-config-and-the-12-factor-app/README.md) | `beginner` | ✅ | 🟢 Published |
 
 <!-- CONCEPT_TABLE_END -->
 
