@@ -4,7 +4,7 @@
 > A zero-dependency, open-source guide teaching 157 backend and system design concepts through failure stories, real-world analogies, diagrams, and runnable code.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Concepts](https://img.shields.io/badge/concepts-6%2F157-blue)
+![Concepts](https://img.shields.io/badge/concepts-7%2F157-blue)
 ![Dependencies](https://img.shields.io/badge/dependencies-0-success)
 ![Node LTS](https://img.shields.io/badge/node-%3E%3D20-green)
 
@@ -46,7 +46,7 @@ Depending on your goal, jump directly into a curated reading path:
 <!-- PROGRESS_TABLE_START -->
 | # | Category | Planned | Published | Reviewed | Draft | Progress |
 | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
-| 01 | [Foundations](docs/01-foundations/README.md) | 12 | 6 | 0 | 0 | `█████░░░░░ 50%` |
+| 01 | [Foundations](docs/01-foundations/README.md) | 12 | 7 | 0 | 0 | `██████░░░░ 58%` |
 | 02 | [API Reliability](docs/02-api-reliability/README.md) | 16 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
 | 03 | [Performance & Caching](docs/03-performance-and-caching/README.md) | 12 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
 | 04 | [Databases](docs/04-databases/README.md) | 13 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
@@ -59,7 +59,7 @@ Depending on your goal, jump directly into a curated reading path:
 | 11 | [Scaling & Resilience](docs/11-scaling-and-resilience/README.md) | 12 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
 | 12 | [Observability & Operations](docs/12-observability-and-operations/README.md) | 14 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
 | 13 | [AI-Era Backend](docs/13-ai-era-backend/README.md) | 5 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
-| **All** | **Total** | **157** | **6** | **0** | **0** | **`░░░░░░░░░░ 4%`** |
+| **All** | **Total** | **157** | **7** | **0** | **0** | **`░░░░░░░░░░ 4%`** |
 
 <!-- PROGRESS_TABLE_END -->
 
@@ -76,6 +76,7 @@ Depending on your goal, jump directly into a curated reading path:
 | `004` | [Authentication vs Authorization (AuthN vs AuthZ)](docs/01-foundations/004-authentication-vs-authorization/README.md) | 01-foundations | `beginner` | ✅ | 🟢 Published |
 | `005` | [Environment Config and the 12-Factor App](docs/01-foundations/005-environment-config-and-the-12-factor-app/README.md) | 01-foundations | `beginner` | ✅ | 🟢 Published |
 | `006` | [Monolith vs Modular Monolith vs Microservices](docs/01-foundations/006-monolith-vs-modular-monolith-vs-microservices/README.md) | 01-foundations | `beginner` | ✅ | 🟢 Published |
+| `007` | [Input Validation and Sanitization](docs/01-foundations/007-input-validation-and-sanitization/README.md) | 01-foundations | `beginner` | ✅ | 🟢 Published |
 
 <!-- CONCEPT_CATALOG_END -->
 
