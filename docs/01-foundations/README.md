@@ -13,6 +13,7 @@ Before scaling to thousands of concurrent users, basic protocol errors, poor tim
 | `001` | [HTTP Status Codes and Error Semantics](001-http-status-codes-and-error-semantics/README.md) | `beginner` | ✅ | 🟢 Published |
 | `002` | [API Contract Drift and Schema Validation](002-api-contract-drift-and-schema-validation/README.md) | `beginner` | ✅ | 🟢 Published |
 | `003` | [Serialization (JSON, Protobuf, and BigInt Precision)](003-serialization-json-protobuf-and-bigint-precision/README.md) | `beginner` | ✅ | 🟢 Published |
+| `004` | [Authentication vs Authorization (AuthN vs AuthZ)](004-authentication-vs-authorization/README.md) | `beginner` | ✅ | 🟢 Published |
 
 <!-- CONCEPT_TABLE_END -->
 
