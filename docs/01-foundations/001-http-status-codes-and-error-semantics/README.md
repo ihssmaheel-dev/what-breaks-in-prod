@@ -13,8 +13,6 @@ last_reviewed: 2026-10-19
 
 # HTTP Status Codes and Error Semantics
 
-![HTTP Status Codes: The 200 OK Blind Monitoring Trap](assets/hero.jpg)
-
 > **In 30 seconds:** An HTTP status code is a 3-digit number a server sends back to say what happened. If your server sends back `200 OK` when a payment fails, your monitoring tools think everything is fine, your alerts stay silent, and your users get stuck.
 
 ---
