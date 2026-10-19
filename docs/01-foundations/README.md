@@ -21,6 +21,7 @@ Before scaling to thousands of concurrent users, basic protocol errors, poor tim
 | `009` | [Time, Timezones, and UTC Handling](009-time-timezones-and-utc-handling/README.md) | `beginner` | ✅ | 🟢 Published |
 | `010` | [Money Handling and Fixed-Point Math](010-money-handling-and-fixed-point-math/README.md) | `beginner` | ✅ | 🟢 Published |
 | `011` | [File Uploads and Presigned Object Storage](011-file-uploads-and-presigned-object-storage/README.md) | `beginner` | ✅ | 🟢 Published |
+| `012` | [Testing Strategy (Unit vs Integration vs Contract vs Load)](012-testing-strategy-unit-vs-integration-vs-contract-vs-load/README.md) | `beginner` | ✅ | 🟢 Published |
 
 <!-- CONCEPT_TABLE_END -->
 
