@@ -19,6 +19,7 @@ Before scaling to thousands of concurrent users, basic protocol errors, poor tim
 | `007` | [Input Validation and Sanitization](007-input-validation-and-sanitization/README.md) | `beginner` | ✅ | 🟢 Published |
 | `008` | [Pagination (Offset vs Cursor)](008-pagination-offset-vs-cursor/README.md) | `beginner` | ✅ | 🟢 Published |
 | `009` | [Time, Timezones, and UTC Handling](009-time-timezones-and-utc-handling/README.md) | `beginner` | ✅ | 🟢 Published |
+| `010` | [Money Handling and Fixed-Point Math](010-money-handling-and-fixed-point-math/README.md) | `beginner` | ✅ | 🟢 Published |
 
 <!-- CONCEPT_TABLE_END -->
 
