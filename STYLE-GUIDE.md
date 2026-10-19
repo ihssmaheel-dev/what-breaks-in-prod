@@ -13,7 +13,7 @@ This document defines the writing, coding, and architectural standards for all c
 5. **Show broken code and fixed code side by side.** Make the flaw unmistakable before presenting the solution.
 6. **Diagram everything that moves.** Illustrate request flows, lock handoffs, message queues, and failover steps using Mermaid.
 7. **Be honest about trade-offs.** Every single concept has a cost. Every page must explicitly state when NOT to use the concept.
-8. **Short sentences, active voice, no hype, no filler.** Write directly to the reader.
+8. **Simple, everyday English, short sentences, active voice, zero fluff.** Write directly to the reader like you are explaining it to a friend over coffee. Never use corporate or academic buzzwords when a simple word works.
 9. **No em dashes.** Use standard commas, parentheses, colons, or separate sentences instead.
 10. **Never invent numbers, benchmarks, or quotes.** Always cite official documentation, RFCs, or verified engineering blog posts.
 11. **Tag every page:** `beginner`, `intermediate`, or `advanced`.

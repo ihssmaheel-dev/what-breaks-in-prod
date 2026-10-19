@@ -26,7 +26,7 @@ Rules:
 - Always include when NOT to use the concept and the trade-offs.
 - Never invent statistics, benchmarks, quotes or company claims. If unsure,
   say so or leave it out.
-- Tone: friendly, direct, short sentences, no hype, no filler. No em dashes.
+- Tone: friendly, direct, simple everyday English, short punchy sentences, zero fluff, no corporate buzzwords. No em dashes. Explain it like a friend over coffee.
 - Length: 800 to 1200 words, excluding code.
 - End with 3 self-test questions with answers, 2 interview questions with
   short answers, and a 5-line cheat sheet.
