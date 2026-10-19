@@ -13,107 +13,105 @@ last_reviewed: 2026-10-19
 
 # HTTP Status Codes and Error Semantics
 
-> **In 30 seconds:** An HTTP status code is a three-digit contract between client and server. If your server returns `200 OK` when a payment fails, or `500 Internal Server Error` when a user types an invalid email, your monitoring goes blind, caches store bad data, and clients trigger destructive retry storms.
+> **In 30 seconds:** An HTTP status code is a 3-digit number a server sends back to say what happened. If your server sends back `200 OK` when a payment fails, your monitoring tools think everything is fine, your alerts stay silent, and your users get stuck.
 
 ---
 
 ## The story
 
-In 2021, an e-commerce platform suffered a four-hour checkout blackout during a seasonal flash sale. Over 30,000 customers attempted to check out with expired credit cards or invalid coupon codes.
+In 2021, an online store had a 4-hour checkout outage during a big sale. Over 30,000 shoppers tried to buy items with expired cards or invalid coupon codes.
 
-The backend service was programmed to never throw unhandled exceptions. Instead, for every request, it returned `HTTP 200 OK` with a JSON payload:
+The developers wanted to be safe. They wrote code that caught every error and always returned `HTTP 200 OK` with a JSON message:
 
 ```json
 {
   "success": false,
-  "error": "Card declined: insufficient funds",
-  "code": 4002
+  "error": "Card declined: insufficient funds"
 }
 ```
 
-The consequences cascaded across the entire platform:
+This tiny choice broke three separate systems at once:
 
-1. **Silent monitoring:** The site reliability engineering (SRE) dashboard tracked HTTP 5xx error rates to trigger alerts. Because every failed payment returned `HTTP 200 OK`, the dashboard showed 99.99% system health. The engineering team had no idea checkout was broken.
-2. **Aggressive browser caching:** Cloudflare was configured to cache static `200 OK` responses for product bundle recommendations. Because coupon validation endpoints returned `200 OK`, intermediary proxies cached failed coupon lookups for distinct user sessions.
-3. **No automated retries:** Mobile apps were programmed to retry transient network hiccups whenever they received `503 Service Unavailable`. Because the API returned `200 OK`, mobile apps displayed generic error messages and aborted purchases instead of retrying temporary database glitches.
+1. **The monitoring dashboard went blind:** The team's alert system only checked the 3-digit status code. It saw `200 OK` on every single request. The dashboard showed 99.99% uptime. The team thought everything was running smoothly while 30,000 customers were unable to buy anything.
+2. **Caches saved the error:** The caching layer saw `200 OK` and assumed the response was good data. It saved the error page and served that same "Card declined" message to other shoppers who had not even entered their card details yet.
+3. **The mobile app gave up:** Mobile apps can automatically retry temporary server hiccups when they see a `503 Service Unavailable`. Because the API sent back `200 OK`, the app thought the conversation was finished and gave up immediately.
 
-The company lost hundreds of thousands of dollars in revenue while their health monitors reported perfect uptime.
+The company lost hundreds of thousands of dollars while their screens showed green checkmarks.
 
 ---
 
 ## The analogy
 
-Imagine mailing a parcel at a post office counter:
+Think of mailing a letter at the post office:
 
-- **HTTP 200 OK:** The clerk accepts the parcel, hands you a tracking receipt, and files it for delivery.
-- **The "200 with Error Payload" bug:** The clerk smiles, stamps your receipt "Package Accepted", hands you the stamped receipt, but tosses your parcel into the lobby trash bin. As you walk out, the tracking portal logs "Delivered successfully", yet the recipient receives nothing.
-- **HTTP 4xx (Client Error):** You addressed the envelope to an address that does not exist, forgot a stamp, or arrived outside business hours. The clerk rejects the envelope and tells you what to fix. Retrying the exact same envelope 50 times without fixing the address will produce the exact same rejection 50 times.
-- **HTTP 5xx (Server Error):** The sorting conveyor belt snapped or the post office ceiling caved in. Your envelope is flawless, but the post office cannot process it right now. You should wait a moment and try again.
+- **200 OK:** The clerk takes your letter, stamps it "Accepted", and files it. Everything worked.
+- **The "200 with error" bug:** The clerk smiles, stamps your receipt "Accepted", but drops your letter into the trash can behind the desk. The tracking screen says "Delivered", but your friend never gets the letter.
+- **4xx (Your mistake):** You forgot to write an address or you did not put a stamp on the envelope. The clerk gives it back to you. If you bring that exact same envelope back 50 times without fixing it, it will fail 50 times.
+- **5xx (Their mistake):** The post office roof fell in or their sorting machines caught fire. Your letter is fine, but the building cannot work right now. You should wait 10 minutes and try again.
 
 ---
 
 ## What it is
 
-An **HTTP status code** is a standardized three-digit integer returned in the header of an HTTP response (defined by IETF RFC 9110). It tells every intermediary in the network (browsers, CDNs, API gateways, load balancers, and monitoring agents) what happened before anyone reads a single byte of the response body.
+An **HTTP status code** is a standardized 3-digit number sent at the very top of a server response. It tells everyone in the network (your browser, your mobile app, CDNs, load balancers, and monitoring tools) what happened before anyone reads the message body.
 
-The first digit defines the status class:
+There are 5 number families based on the first digit:
 
-- **1xx (Informational):** Request received, continuing process (for example, `101 Switching Protocols` during a WebSocket handshake).
-- **2xx (Success):** The action requested by the client was received, understood, and accepted (for example, `200 OK`, `201 Created`, `204 No Content`).
-- **3xx (Redirection):** Further action must be taken by the client to complete the request (for example, `301 Moved Permanently`, `304 Not Modified`).
-- **4xx (Client Error):** The client sent something wrong. The request contains bad syntax, invalid data, or lacks authorization. The client should not repeat the identical request without modifications (for example, `400 Bad Request`, `401 Unauthorized`, `403 Forbidden`, `404 Not Found`, `422 Unprocessable Entity`, `429 Too Many Requests`).
-- **5xx (Server Error):** The server failed to fulfill an apparently valid request due to an internal crash, timeout, or downstream dependency failure. The client may retry the request using exponential backoff (for example, `500 Internal Server Error`, `502 Bad Gateway`, `503 Service Unavailable`, `504 Gateway Timeout`).
+- **1xx (Hold on):** "I got your request. I am still working on it."
+- **2xx (Success):** "Done! Everything worked as expected."
+- **3xx (Go over there):** "The thing you want has moved. Go to this other link instead."
+- **4xx (You made a mistake):** "The request is bad. Fix your input before trying again."
+- **5xx (I crashed):** "The server or database broke. It is not your fault. Try again later."
 
 ---
 
 ## How it works
 
-The diagram below contrasts how an API Gateway and an SRE Monitoring system react when an API uses semantic HTTP status codes versus when it hides failures inside `200 OK` responses:
+Here is what happens inside your system when you use a real status code versus when you hide errors inside `200 OK`:
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Client
-    participant Gateway as API Gateway / CDN
+    actor Client as Mobile App
+    participant Gateway as API Gateway
     participant Server as Backend API
-    participant Monitoring as Datadog / Prometheus
+    participant Alerts as SRE Alert System
 
     rect rgb(255, 235, 235)
-        Note over Client,Server: Anti-Pattern: 200 OK with Error Body
-        Client->>Gateway: POST /orders (invalid payload)
+        Note over Client,Server: Bad Pattern: 200 OK with Error Message
+        Client->>Gateway: POST /buy (invalid card)
         Gateway->>Server: Forward request
-        Server-->>Gateway: HTTP 200 OK { success: false, error: "Invalid data" }
-        Gateway->>Monitoring: Increment metric: 200_OK_count (+1)
-        Gateway-->>Client: HTTP 200 OK (Monitoring is blind to failure)
+        Server-->>Gateway: 200 OK { success: false, error: "Bad card" }
+        Gateway->>Alerts: Record 200 OK (Counted as healthy!)
+        Gateway-->>Client: 200 OK (Monitoring is blind to the outage)
     end
 
     rect rgb(235, 255, 235)
-        Note over Client,Server: Production Standard: Semantic Status Codes
-        Client->>Gateway: POST /orders (invalid payload)
+        Note over Client,Server: Good Pattern: Clear 4xx Status Code
+        Client->>Gateway: POST /buy (invalid card)
         Gateway->>Server: Forward request
-        Server-->>Gateway: HTTP 422 Unprocessable Entity { title: "Invalid data" }
-        Gateway->>Monitoring: Increment metric: 4xx_client_error (+1)
-        Gateway-->>Client: HTTP 422 (Client knows data is invalid, won't retry blindly)
+        Server-->>Gateway: 422 Unprocessable Entity { error: "Bad card" }
+        Gateway->>Alerts: Record 4xx client error
+        Gateway-->>Client: 422 (App knows input is bad and tells user to fix it)
     end
 ```
 
-### Walkthrough of the response lifecycle
+### What happens step by step
 
-1. In the anti-pattern, the client submits an invalid request.
-2. The server detects the validation failure but writes a `200 OK` header with an error message in the JSON body.
-3. The API Gateway and Prometheus parser only inspect HTTP status headers. They record the request as successful.
-4. Alerts never fire. CDNs may cache the response, serving an error payload to subsequent customers.
-5. In the production-standard flow, the server responds with `HTTP 422 Unprocessable Entity`.
-6. The Gateway increments the 4xx client error metrics immediately.
-7. The client SDK inspects `response.ok`, detects the failure, and alerts the user without retrying a doomed payload.
+1. In the bad pattern, the server sees bad input but still sends a `200 OK` header with an error written inside the body.
+2. The API Gateway and alert systems only look at the header. They count the request as a success.
+3. Your alerts do not go off. The engineering team has no idea users are failing.
+4. In the good pattern, the server sends back `422 Unprocessable Entity`.
+5. The gateway records a client error.
+6. The app sees `422`, knows the user entered bad data, shows a clear form warning, and does not retry blindly.
 
 ---
 
 ## Broken vs fixed
 
-### Broken: The "Always 200" anti-pattern
+### Broken: Everything returns 200 OK
 
-Here is naive code written by developers who treat HTTP as an invisible pipe rather than a semantic protocol:
+This code hides every problem behind a fake success message:
 
 ```javascript
 // BROKEN: Everything returns 200 OK
@@ -122,7 +120,7 @@ app.post("/api/checkout", async (req, res) => {
     const { email, amount, cardNumber } = req.body;
 
     if (!email || !amount) {
-      // Problem 1: Client error disguised as success
+      // Problem: The user forgot an input, but the status says OK
       return res.status(200).json({
         success: false,
         error: "Missing required fields"
@@ -132,38 +130,36 @@ app.post("/api/checkout", async (req, res) => {
     const charge = await chargeCard(cardNumber, amount);
     return res.status(200).json({ success: true, charge });
   } catch (err) {
-    // Problem 2: Infrastructure crash disguised as success
+    // Problem: The payment system crashed, but the status says OK
     return res.status(200).json({
       success: false,
-      error: "Payment gateway crashed"
+      error: "Payment service crashed"
     });
   }
 });
 ```
 
-### Fixed: Semantic status codes with RFC 7807 problem details
+### Fixed: Return the right status code for each situation
 
-Here is the production-ready implementation adhering to standard status codes and structured problem objects:
+This code tells the network exactly what happened:
 
 ```javascript
-// FIXED: Accurate semantic status codes
+// FIXED: Real status codes that match reality
 app.post("/api/checkout", async (req, res) => {
   try {
     const { email, amount, cardNumber } = req.body;
 
     if (!email || !amount) {
-      // 400 Bad Request / 422 Unprocessable Entity
+      // 422: The input is missing or invalid. Client must fix it.
       return res.status(422).json({
-        type: "https://api.example.com/errors/validation-failed",
         title: "Validation Error",
         status: 422,
-        detail: "The fields 'email' and 'amount' are mandatory.",
-        instance: req.originalUrl
+        detail: "The fields 'email' and 'amount' are required."
       });
     }
 
     const charge = await chargeCard(cardNumber, amount);
-    // 201 Created for new resources, or 200 OK
+    // 201: A brand new payment record was created.
     return res.status(201).json({
       id: charge.id,
       amount: charge.amount,
@@ -171,21 +167,19 @@ app.post("/api/checkout", async (req, res) => {
     });
   } catch (err) {
     if (err.name === "CardDeclinedException") {
-      // 402 Payment Required: Client-actionable issue
+      // 402: The card had no money. The user must fix their card.
       return res.status(402).json({
-        type: "https://api.example.com/errors/card-declined",
         title: "Payment Required",
         status: 402,
         detail: err.message
       });
     }
 
-    // 502 Bad Gateway / 503 Service Unavailable: Upstream failure
+    // 502: The bank's server did not answer. Our server did not cause this.
     return res.status(502).json({
-      type: "https://api.example.com/errors/bad-gateway",
-      title: "Upstream Payment Processor Unavailable",
+      title: "Bad Gateway",
       status: 502,
-      detail: "The upstream banking network failed to respond in time."
+      detail: "The bank did not respond. Please try again in a minute."
     });
   }
 });
@@ -195,93 +189,82 @@ app.post("/api/checkout", async (req, res) => {
 
 ## Try it yourself
 
-Run the zero-dependency demonstration script in this directory:
+Run the demo script in this folder:
 
 ```bash
 node docs/01-foundations/001-http-status-codes-and-error-semantics/demo.mjs
 ```
 
-### What the demo proves
+### What you will see
 
-The script starts a lightweight HTTP server on your machine, sends requests simulating both broken and fixed endpoints, and evaluates how a client-side SDK and an automated observability layer react.
-
-You will see:
-1. How a `200 OK` error payload passes silently through `res.ok`, inflating success metrics.
-2. How proper 4xx/5xx status codes trigger client error boundaries and allow telemetry agents to categorize bugs immediately.
-
----
-
-## Where you have seen it
-
-- **Stripe API:** The gold standard in HTTP semantics. Invalid requests return `400` or `422`. Rate limits return `429 Too Many Requests`. Expired authentication tokens return `401 Unauthorized`.
-- **GitHub REST API:** Every rate-limited client receives `HTTP 429` with `Retry-After` headers, allowing automated CLI tools to pause execution cleanly.
-- **AWS S3:** A request to upload a 6 GB file via a single PUT returns `HTTP 400 Bad Request` with an explicit XML error code `EntityTooLarge`, guiding developers toward multipart uploads.
+The demo runs a small server on your machine and sends 3 test requests:
+1. It sends bad data to a broken endpoint. You will see the server send back `200 OK`. The monitoring counter records `Success: 1`. The failure is completely hidden.
+2. It sends bad data to a fixed endpoint. The server sends back `422`. The monitoring counter records `Client Error: 1`. The issue is visible right away.
+3. It simulates an upstream server crash. The server sends back `502`. The monitoring counter records `Server Error: 1`, showing how real alerts get triggered.
 
 ---
 
-## The Core Status Codes You Must Know
+## The 14 Status Codes You Will Use 99% of the Time
 
-| Code | Name | Category | Meaning in Production |
+| Code | Name | Family | What it actually means |
 | :--- | :--- | :---: | :--- |
-| **`200`** | OK | Success | Standard response for successful GET, PUT, or PATCH requests. |
-| **`201`** | Created | Success | A new record was stored (POST). Includes `Location` header or payload ID. |
-| **`204`** | No Content | Success | Operation succeeded, but there is no body to return (common for DELETE). |
-| **`304`** | Not Modified | Redirection | ETag or cache header matches. Client should read from local cache. |
-| **`400`** | Bad Request | Client Error | Malformed JSON or syntax that the parser cannot read. |
-| **`401`** | Unauthorized | Client Error | Identity is missing or invalid. The user needs to authenticate. |
-| **`403`** | Forbidden | Client Error | Identity is known, but permissions do not allow this action. |
-| **`404`** | Not Found | Client Error | Resource does not exist, or hidden for security to prevent ID enumeration. |
-| **`409`** | Conflict | Client Error | Edit conflict or duplicate key violation (e.g., username already taken). |
-| **`422`** | Unprocessable Entity | Client Error | Syntax is valid JSON, but business logic fails (e.g., negative balance). |
-| **`429`** | Too Many Requests | Client Error | Rate limit breached. Always include a `Retry-After` header. |
-| **`500`** | Internal Server Error | Server Error | Unhandled code exception or crash in your application. |
-| **`502`** | Bad Gateway | Server Error | Your server received an invalid or crashed response from an upstream server (e.g., Node behind NGINX). |
-| **`503`** | Service Unavailable | Server Error | Server is overloaded, running maintenance, or shutting down gracefully. |
-| **`504`** | Gateway Timeout | Server Error | Upstream database or external API took too long to reply before proxy timeout. |
+| **`200`** | OK | Success | "It worked. Here is your data." |
+| **`201`** | Created | Success | "It worked. I created the new record you asked for." |
+| **`204`** | No Content | Success | "It worked, but I have nothing to show you (common after deleting something)." |
+| **`304`** | Not Modified | Redirect | "This file has not changed since you last checked. Use your local copy." |
+| **`400`** | Bad Request | Client Error | "Your request is broken or not readable (like bad JSON syntax)." |
+| **`401`** | Unauthorized | Client Error | "I do not know who you are. Please log in first." |
+| **`403`** | Forbidden | Client Error | "I know who you are, but you do not have permission to do this." |
+| **`404`** | Not Found | Client Error | "That item or page does not exist." |
+| **`409`** | Conflict | Client Error | "That username or email is already taken in the database." |
+| **`422`** | Unprocessable Entity | Client Error | "Your data is readable, but the values do not make sense (like age = -5)." |
+| **`429`** | Too Many Requests | Client Error | "You are sending requests too fast. Slow down." |
+| **`500`** | Internal Server Error | Server Error | "My code crashed unexpectedly. Check the server logs." |
+| **`502`** | Bad Gateway | Server Error | "I tried to talk to another service (like a database or bank), but it crashed." |
+| **`504`** | Gateway Timeout | Server Error | "I asked another service for data, but it took too long to answer." |
 
 ---
 
-## When to use it
+## When to use them
 
-- On **every single HTTP endpoint** you expose to clients, internal microservices, or webhooks.
-- When configuring **load balancer health checks**: Route monitors against an endpoint that returns `200` only when internal dependencies are alive, and `503` during startup or shutdown.
-- When designing **frontend and mobile SDKs**: SDKs should switch behavior based on status code ranges:
-  - `4xx`: Alert the user to change their input. Never retry automatically.
-  - `429`: Pause execution until the duration specified in `Retry-After`.
-  - `5xx`: Trigger retry logic using exponential backoff.
+- On **every API endpoint** you create.
+- On **health check endpoints**: Make your `/health` route return `200` when ready, and `503` when starting up or shutting down.
+- In **frontend code**: Check `response.ok` or the status number:
+  - If it starts with `4`, show the error to the user so they can fix their input.
+  - If it starts with `5`, tell the user to wait a moment and let your app retry automatically.
 
 ---
 
-## When to skip it
+## When to skip them
 
-- **Internal non-HTTP transports:** When using native RPC frameworks like raw gRPC (which uses its own 16-code canonical status model: `OK`, `CANCELLED`, `UNAVAILABLE`, etc.), AMQP message queues, or WebSockets.
-- **GraphQL query execution:** By specification, GraphQL queries often return `200 OK` with an `errors` array in the JSON body. However, authentication failures, transport timeouts, or gateway rejections before GraphQL execution must still emit proper 4xx/5xx HTTP status codes.
+- When using tools that do not use HTTP, like WebSockets, raw gRPC, or message queues (like RabbitMQ or Kafka). Those tools have their own error systems.
+- When writing GraphQL query resolvers. In GraphQL, queries often return `200 OK` with an `errors` list inside the JSON. However, your main web server should still send 4xx or 5xx if the user is not logged in or the server is down.
 
 ---
 
 ## Common mistakes
 
-- **Returning `500` for user validation errors:** When an end-user submits a password that is too short, returning `500` tells automated SDKs that the server crashed. SDKs will retry five times, creating unnecessary load and triggering bogus SRE pagers. Return `400` or `422`.
-- **Confusing `401 Unauthorized` with `403 Forbidden`:** `401` means "Who are you? Please log in." `403` means "I know who you are, but you do not have permission to view this resource." Returning `401` to a logged-in user causes frontends to clear the session and force an unnecessary re-login.
-- **Inventing non-standard status codes:** Using `209`, `490`, or custom numbers breaks proxies, web application firewalls, and client HTTP libraries. Stick strictly to standard IANA / RFC status codes.
+- **Returning `500` when the user types a short password:** If the user made a typo, that is a client mistake, not a server crash. If you send `500`, automated client apps will think your server is broken and retry 5 times. Return `422` or `400`.
+- **Mixing up `401` and `403`:** `401` means "Who are you? Please log in." `403` means "I know who you are, but you are not allowed in this room." If you send `401` to an already logged-in user, your frontend might log them out by accident.
+- **Making up fake status codes:** Do not invent numbers like `209` or `499`. Stick strictly to the standard list. Outside tools will not understand your custom numbers.
 
 ---
 
 ## Self-test
 
 <details>
-<summary>Question 1: A user submits a registration form with an email that already exists in the database. What HTTP status code should the API return?</summary>
-<strong>Answer:</strong> <code>HTTP 409 Conflict</code> (or <code>422 Unprocessable Entity</code>). The request is syntactically valid, but processing it would violate a unique constraint on the database. Returning <code>400 Bad Request</code> is acceptable but less specific. Returning <code>500</code> is completely wrong because the server did not fail.
+<summary>Question 1: A user tries to create an account with an email that is already registered. What status code should you return?</summary>
+<strong>Answer:</strong> <code>409 Conflict</code> (or <code>422 Unprocessable Entity</code>). The data format was fine, but that email is already in the database. Never send <code>500</code> because the server did not break.
 </details>
 
 <details>
-<summary>Question 2: An NGINX reverse proxy receives a request, forwards it to a Node.js backend, but the Node.js process crashes immediately with a memory leak before responding. What status code will NGINX return to the client?</summary>
-<strong>Answer:</strong> <code>HTTP 502 Bad Gateway</code>. NGINX was acting as a gateway/proxy and received an abrupt connection reset or invalid packet from the upstream Node.js application server. If Node.js stayed alive but hung for 60 seconds without responding, NGINX would return <code>HTTP 504 Gateway Timeout</code>.
+<summary>Question 2: Your web server contacts your database, but the database takes 30 seconds and never answers. What status code should your web server send back to the user?</summary>
+<strong>Answer:</strong> <code>504 Gateway Timeout</code>. Your web server was waiting on another computer behind it, and that computer took too long.
 </details>
 
 <details>
-<summary>Question 3: Why should client libraries NEVER automatically retry an HTTP 422 or HTTP 400 response without modifications?</summary>
-<strong>Answer:</strong> 4xx status codes indicate client-side errors. Because the payload itself is invalid or violates business constraints, resending the identical payload 1,000 times will produce the identical rejection 1,000 times while burning server CPU and network bandwidth. Only 5xx errors or transient 429 errors should be retried.
+<summary>Question 3: Why should a mobile app NEVER automatically retry a 400 or 422 error?</summary>
+<strong>Answer:</strong> Because 4xx means the input data was wrong. If you send the exact same bad data 10,000 times, it will fail 10,000 times. You are just wasting battery and server bandwidth. Only retry 5xx errors or 429 rate limits.
 </details>
 
 ---
@@ -289,20 +272,20 @@ You will see:
 ## Interview angle
 
 1. **"What is the difference between 502 Bad Gateway and 504 Gateway Timeout?"**
-   *Model answer:* Both indicate problems between a reverse proxy (like NGINX, Cloudflare, or AWS ALB) and an upstream origin server. `502 Bad Gateway` means the proxy contacted the upstream server, but the upstream server returned an invalid response, crashed, or terminated the TCP connection abruptly. `504 Gateway Timeout` means the proxy contacted the upstream server, but the upstream server did not respond before the proxy's configured read timeout elapsed.
+   *Model answer:* Both happen when a front proxy (like NGINX or Cloudflare) talks to a backend service. A `502` means the backend service answered, but it crashed or sent back broken data immediately. A `504` means the backend service never answered at all before the proxy gave up waiting.
 
-2. **"Why is returning HTTP 200 with an error object considered a severe architectural defect in distributed systems?"**
-   *Model answer:* It breaks the layered architecture of the web. Reverse proxies, CDNs, API gateways, service meshes, and observability agents inspect HTTP response headers without parsing JSON bodies. Disguising failures as `200 OK` breaks automated caching, disables circuit breakers, conceals error spikes from monitoring systems, and prevents client HTTP clients from executing standard retry logic.
+2. **"Why is returning 200 OK with an error message in the JSON body bad for system architecture?"**
+   *Model answer:* Because caching systems, load balancers, and monitoring tools do not read your JSON body. They only look at the 3-digit number in the header. If you return `200`, monitoring tools mark the request as healthy, alerts stay silent during outages, and CDNs might cache the error page and show it to other users.
 
 ---
 
 ## Cheat sheet
 
-- `2xx` means the client did well and the server succeeded.
-- `4xx` means the client made a mistake; never retry the exact same request automatically.
-- `5xx` means the server or an upstream service crashed; retry with exponential backoff and jitter.
-- Use `401` for unauthenticated requests and `403` for unauthorized permissions.
-- Never return `200 OK` for an error; it blinds monitoring and corrupts intermediate caches.
+- `2xx`: The client succeeded and got what it wanted.
+- `4xx`: The client made a mistake; do not retry the exact same request.
+- `5xx`: The server broke; wait a few seconds and try again.
+- Use `401` when they need to log in; use `403` when they do not have permission.
+- Never send `200 OK` for an error. It hides crashes from your monitoring tools.
 
 ---
 
@@ -316,6 +299,6 @@ You will see:
 
 ## Sources
 
-- [RFC 9110: HTTP Semantics (IETF Standard)](https://www.rfc-editor.org/rfc/rfc9110.html)
+- [RFC 9110: HTTP Semantics (Official IETF Standard)](https://www.rfc-editor.org/rfc/rfc9110.html)
 - [RFC 7807: Problem Details for HTTP APIs](https://www.rfc-editor.org/rfc/rfc7807.html)
 - [MDN Web Docs: HTTP Response Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
