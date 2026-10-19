@@ -18,6 +18,7 @@ Before scaling to thousands of concurrent users, basic protocol errors, poor tim
 | `006` | [Monolith vs Modular Monolith vs Microservices](006-monolith-vs-modular-monolith-vs-microservices/README.md) | `beginner` | ✅ | 🟢 Published |
 | `007` | [Input Validation and Sanitization](007-input-validation-and-sanitization/README.md) | `beginner` | ✅ | 🟢 Published |
 | `008` | [Pagination (Offset vs Cursor)](008-pagination-offset-vs-cursor/README.md) | `beginner` | ✅ | 🟢 Published |
+| `009` | [Time, Timezones, and UTC Handling](009-time-timezones-and-utc-handling/README.md) | `beginner` | ✅ | 🟢 Published |
 
 <!-- CONCEPT_TABLE_END -->
 
