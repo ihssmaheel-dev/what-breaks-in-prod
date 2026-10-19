@@ -1,4 +1,4 @@
-# Learning Path: Vibe Coder to Production-Safe
+# Learning Path: What Breaks First (Prototype to Production)
 
 A prioritized, 30-concept curriculum designed for developers who build with AI or rapid prototyping tools and want their applications to survive real traffic without 3 AM outages.
 

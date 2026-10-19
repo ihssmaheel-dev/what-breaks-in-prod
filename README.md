@@ -34,7 +34,7 @@ Every single concept page adheres to the exact same 5-part structure:
 
 Depending on your goal, jump directly into a curated reading path:
 
-- 🚀 [**Vibe Coder to Production-Safe**](paths/vibe-coder-to-production-safe.md) — The 30 highest-impact concepts every developer must master before handling real users and payments.
+- 🚀 [**What Breaks First (Prototype to Production)**](paths/what-breaks-first.md) — The 30 highest-impact concepts every developer must master before handling real users and payments.
 - 🎯 [**System Design Interview Sprint**](paths/interview-sprint.md) — Core distributed systems, consistency models, and transaction guarantees tested in technical interviews.
 - 📈 [**Backend Junior to Mid-Level**](paths/backend-junior-to-mid.md) — Structured progression from basic REST CRUD to distributed locking and message queues.
 - ✅ [**Production Readiness Checklist**](paths/production-readiness-checklist.md) — An interactive yes/no audit sheet for your service before deployment.
