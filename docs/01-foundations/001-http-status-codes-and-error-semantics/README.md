@@ -38,6 +38,8 @@ This tiny choice broke three separate systems at once:
 
 The company lost hundreds of thousands of dollars while their screens showed green checkmarks.
 
+![The Blind Monitoring Trap: Why Hiding Errors in 200 OK Kills Systems](assets/01-blind-monitoring-trap.svg)
+
 ---
 
 ## The analogy
@@ -204,7 +206,7 @@ The demo runs a small server on your machine and sends 3 test requests:
 
 ## The decision flow
 
-![Which HTTP Status Code Should You Return?](assets/http-status-decision-tree.svg)
+![The Production HTTP Status Code Decision Flow](assets/02-http-status-decision-flow.svg)
 
 ---
 
