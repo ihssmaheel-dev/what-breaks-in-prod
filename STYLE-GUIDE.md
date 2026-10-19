@@ -35,8 +35,9 @@ All runnable code must adhere to the following rules:
 
 - Use `sequenceDiagram`, `flowchart TD`, or `stateDiagram-v2`.
 - Always enable `autonumber` on sequence diagrams.
-- Keep diagrams simple and scannable in under 30 seconds (maximum 10 to 12 steps).
-- Verify that Mermaid renders properly on GitHub without syntax errors.
+- **Never use `rect rgb(...)` or hardcoded background color boxes:** In dark mode, Mermaid inverts text to white/light grey, which becomes completely invisible on light pastel `rect` backgrounds. Use standard flows and native `Note over` blocks.
+- Keep diagrams simple and scannable in under 30 seconds (maximum 6 to 8 steps per diagram; split into Scenario A vs Scenario B if comparing two flows).
+- Verify that Mermaid renders cleanly with high contrast in both dark and light modes.
 
 ---
 

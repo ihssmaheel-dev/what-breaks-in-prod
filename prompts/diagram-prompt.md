@@ -12,5 +12,6 @@ Diagram requirements:
 - Ensure 100% valid Mermaid syntax that renders cleanly on GitHub.
 - Avoid quotes inside unescaped strings or special characters that break Mermaid parsers.
 - Illustrate the transition from failure condition (or naive state) to the resilient mechanism.
-- Keep the diagram under 12 steps so it remains scannable in 30 seconds.
+- Keep the diagram under 8 steps so it remains scannable in 30 seconds (split into Scenario A vs Scenario B if comparing two flows).
+- NEVER use 'rect rgb(...)' or colored background rectangles. In Dark Mode, Mermaid text turns light grey/white, which washes out completely against light background boxes. Use clean native flows with 'Note over' blocks instead.
 ```

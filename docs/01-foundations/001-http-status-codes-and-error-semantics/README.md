@@ -67,7 +67,9 @@ There are 5 number families based on the first digit:
 
 ## How it works
 
-Here is what happens inside your system when you use a real status code versus when you hide errors inside `200 OK`:
+### Scenario A: The Bad Pattern (Hiding Errors in 200 OK)
+
+When your server returns `200 OK` for an error, the alert system is blinded:
 
 ```mermaid
 sequenceDiagram
@@ -77,23 +79,30 @@ sequenceDiagram
     participant Server as Backend API
     participant Alerts as SRE Alert System
 
-    rect rgb(255, 235, 235)
-        Note over Client,Server: Bad Pattern: 200 OK with Error Message
-        Client->>Gateway: POST /buy (invalid card)
-        Gateway->>Server: Forward request
-        Server-->>Gateway: 200 OK { success: false, error: "Bad card" }
-        Gateway->>Alerts: Record 200 OK (Counted as healthy!)
-        Gateway-->>Client: 200 OK (Monitoring is blind to the outage)
-    end
+    Client->>Gateway: POST /buy (invalid card)
+    Gateway->>Server: Forward request
+    Server-->>Gateway: 200 OK with body { "error": "Bad card" }
+    Gateway->>Alerts: Record 200 OK (Counted as healthy!)
+    Gateway-->>Client: 200 OK (Alerts stay silent during outage)
+```
 
-    rect rgb(235, 255, 235)
-        Note over Client,Server: Good Pattern: Clear 4xx Status Code
-        Client->>Gateway: POST /buy (invalid card)
-        Gateway->>Server: Forward request
-        Server-->>Gateway: 422 Unprocessable Entity { error: "Bad card" }
-        Gateway->>Alerts: Record 4xx client error
-        Gateway-->>Client: 422 (App knows input is bad and tells user to fix it)
-    end
+### Scenario B: The Good Pattern (Semantic 4xx Status Code)
+
+When your server returns a real `4xx` code, the client and gateway handle it accurately:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Client as Mobile App
+    participant Gateway as API Gateway
+    participant Server as Backend API
+    participant Alerts as SRE Alert System
+
+    Client->>Gateway: POST /buy (invalid card)
+    Gateway->>Server: Forward request
+    Server-->>Gateway: 422 Unprocessable Entity
+    Gateway->>Alerts: Record 4xx client error
+    Gateway-->>Client: 422 (App warns user, does not retry blindly)
 ```
 
 ### What happens step by step

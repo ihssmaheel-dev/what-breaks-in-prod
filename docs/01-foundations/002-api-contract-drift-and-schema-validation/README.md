@@ -64,32 +64,38 @@ An **API contract** is the agreement between a client (like a website or iOS app
 
 ## How it works
 
-The diagram below shows how an unexpected change crashes an unvalidated client, and how runtime schema validation protects both sides:
+### Scenario A: The Silent Crash (Without Schema Validation)
+
+When the backend renames a field, older client apps break immediately:
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor User as Mobile App (v1.0)
-    participant Gateway as API Boundary
+    actor App as Mobile App (Old Version)
     participant Server as Backend API
+
+    Note over Server: Developer renames "phone_number" to "phoneNumber"
+    App->>Server: GET /profile
+    Server-->>App: 200 OK with { "phoneNumber": "555-0199" }
+    Note over App: App code runs: user.phone_number.trim()
+    Note over App: CRASH: Cannot read properties of undefined
+```
+
+### Scenario B: The Defense (With Boundary Schema Validation)
+
+When untrusted data arrives, the validator inspects it at the door and blocks it before it touches the database:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Client as Frontend Client
+    participant Validator as API Schema Validator
     participant DB as Database
 
-    rect rgb(255, 235, 235)
-        Note over User,Server: The Failure: Silent Contract Drift
-        Server->>Server: Renamed phone_number to phoneNumber
-        User->>Server: GET /profile
-        Server-->>User: 200 OK { "phoneNumber": "555-0199" }
-        User->>User: Reads user.phone_number.trim()
-        Note over User: CRASH: Cannot read properties of undefined
-    end
-
-    rect rgb(235, 255, 235)
-        Note over User,Server: The Defense: Boundary Schema Validation
-        User->>Gateway: POST /profile/update { "age": "twenty" }
-        Gateway->>Gateway: Validate against UserSchema
-        Gateway-->>User: 422 Unprocessable Entity ("age must be a number")
-        Note over Gateway,DB: Bad data is blocked before touching database
-    end
+    Client->>Validator: POST /profile/update { "age": "twenty" }
+    Note over Validator: Checks UserSchema (age must be a number)
+    Validator-->>Client: 422 Unprocessable Entity ("age must be a number")
+    Note over Validator,DB: Bad data blocked at the door: never touches database
 ```
 
 ### Walkthrough of the protection flow
