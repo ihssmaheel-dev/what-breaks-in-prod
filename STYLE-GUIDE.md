@@ -53,24 +53,20 @@ A concept page is ready to publish only when:
 
 ---
 
-## 5. Visual Design System & Image Theme Guidelines
+## 5. Visual Design System: AI Hero Image Theme
 
-Every image and diagram generated across **what-breaks-in-prod** must follow this exact visual theme. This ensures the entire repository looks like a single, cohesive, high-end technical reference.
+Every concept page in **what-breaks-in-prod** includes a dedicated 16:9 AI-generated hero illustration in `assets/hero.jpg`. All concept images follow this exact aesthetic theme to create a cohesive, world-class visual identity across the repository.
 
-### Canvas & Theme Tokens
-- **Format:** Clean vector SVG (`assets/*.svg`) with responsive `viewBox`.
-- **Background Canvas:** Dark slate `#0d1117` (matches GitHub dark mode seamlessly, high contrast in light mode).
-- **Outer Frame:** 1px border `#30363d` with `rx="10"` rounded corners.
-- **Typography:** System font stack (`system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`).
-- **Brand Header Badge:** Standardized pill in the top-left: `[WHAT BREAKS IN PROD • CATEGORY • ID]`.
-
-### Standard Color Tokens
-- **Brand Accent / Headers:** Electric Indigo `#6366f1` / Sky `#38bdf8`
-- **Success / 2xx / Safe State:** Emerald Green text `#34d399`, stroke `#10b981`, badge background `#064e3b`
-- **Client Error / 4xx / Warning:** Amber text `#fbbf24`, stroke `#f59e0b`, badge background `#451a03`
-- **Server Error / 5xx / Crash / Broken:** Rose/Crimson text `#fda4af`, stroke `#f43f5e`, badge background `#4c0519`
-- **Card Containers:** Fill `#161b22`, stroke `#30363d`, border radius `8px`
-- **Primary Text:** White `#f8fafc` (titles, key values)
-- **Secondary Text:** Muted Slate `#94a3b8` (descriptions, hints)
-- **Flow Lines & Connectors:** Stroke `#475569`, width `2px`, filled arrowheads.
+### Master Image Style Tokens
+- **Format & Aspect Ratio:** 16:9 widescreen (`assets/hero.jpg`).
+- **Perspective:** Minimalist 3D isometric tech illustration.
+- **Environment & Background:** Deep obsidian and midnight slate (`#090d16`) high-tech infrastructure or datacenter setting.
+- **Materials & Textures:** Premium matte graphite, obsidian slabs, and glass holographic displays.
+- **Lighting & Color Palette:**
+  - Soft cinematic studio lighting with subtle volumetric haze.
+  - Emerald Green (`#10b981`) for success, healthy states, or deceptive status indicators.
+  - Crimson Red (`#f43f5e`) for system crashes, severed connections, or hidden failure modes.
+  - Electric Cyan (`#06b6d4`) / Indigo (`#6366f1`) for active data conduits and network telemetry.
+- **Core Visual Metaphor:** Every concept image must visually contrast the illusion of safety against the underlying production breakdown (such as a calm `200 OK` holographic display floating above severed, sparking crimson power cables).
+- **Quality Standard:** Ultra-clean 3D render aesthetic (Octane / Cinema4D style), no watermarks, no distorted gibberish text.
 

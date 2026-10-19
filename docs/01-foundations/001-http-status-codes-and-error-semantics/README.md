@@ -13,6 +13,8 @@ last_reviewed: 2026-10-19
 
 # HTTP Status Codes and Error Semantics
 
+![HTTP Status Codes: The 200 OK Blind Monitoring Trap](assets/hero.jpg)
+
 > **In 30 seconds:** An HTTP status code is a 3-digit number a server sends back to say what happened. If your server sends back `200 OK` when a payment fails, your monitoring tools think everything is fine, your alerts stay silent, and your users get stuck.
 
 ---
@@ -37,8 +39,6 @@ This tiny choice broke three separate systems at once:
 3. **The mobile app gave up:** Mobile apps can automatically retry temporary server hiccups when they see a `503 Service Unavailable`. Because the API sent back `200 OK`, the app thought the conversation was finished and gave up immediately.
 
 The company lost hundreds of thousands of dollars while their screens showed green checkmarks.
-
-![The Blind Monitoring Trap: Why Hiding Errors in 200 OK Kills Systems](assets/01-blind-monitoring-trap.svg)
 
 ---
 
@@ -203,10 +203,6 @@ The demo runs a small server on your machine and sends 3 test requests:
 1. It sends bad data to a broken endpoint. You will see the server send back `200 OK`. The monitoring counter records `Success: 1`. The failure is completely hidden.
 2. It sends bad data to a fixed endpoint. The server sends back `422`. The monitoring counter records `Client Error: 1`. The issue is visible right away.
 3. It simulates an upstream server crash. The server sends back `502`. The monitoring counter records `Server Error: 1`, showing how real alerts get triggered.
-
-## The decision flow
-
-![The Production HTTP Status Code Decision Flow](assets/02-http-status-decision-flow.svg)
 
 ---
 
