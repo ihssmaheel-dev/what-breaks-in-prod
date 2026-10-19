@@ -15,17 +15,17 @@ If you don't have structured logs, metrics, and correlation IDs, debugging an in
 <!-- CONCEPT_TABLE_END -->
 
 ## Planned Topics (14)
-1. Structured logging and correlation IDs
-2. Monitoring
-3. Metrics
-4. Alerts
-5. Distributed tracing
-6. Observability
-7. SLIs/SLOs/SLAs
-8. Error budgets
-9. Production incidents
-10. On-call
-11. Runbooks
-12. Postmortems
-13. Code review
-14. Tech debt
+1. Structured logging and JSON logs
+2. Distributed tracing and span propagation
+3. Correlation IDs
+4. Metrics collection and types
+5. Metric cardinality explosion
+6. Alerting fatigue and alert thresholds
+7. Observability vs monitoring
+8. SLIs/SLOs/SLAs
+9. Error budgets
+10. Production incidents and severity triage
+11. On-call rotations
+12. Runbooks and playbooks
+13. Blameless postmortems
+14. Tech debt and refactoring

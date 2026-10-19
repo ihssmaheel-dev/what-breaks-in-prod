@@ -20,7 +20,7 @@ A functional app that leaks credentials, exposes private user records, or accept
 3. CSRF
 4. SSRF
 5. OWASP Top 10 and broken access control
-6. OAuth
+6. OAuth 2.0 and OIDC
 7. JWT and token rotation
 8. Password hashing
 9. Secrets management

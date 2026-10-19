@@ -19,12 +19,12 @@ Code is easy to roll back, but corrupted or locked database tables cause lasting
 2. Normalization vs denormalization
 3. ACID and isolation levels
 4. Database indexing
-5. Query optimization
+5. Query optimization and EXPLAIN ANALYZE
 6. Read replicas
 7. Database migrations
-8. Zero-downtime migrations
-9. Schema versioning
-10. Soft deletes and audit logs
+8. Zero-downtime migrations (Expand/Contract)
+9. Replication lag and read-your-own-writes
+10. Soft deletes and tombstone penalties
 11. Multi-tenancy
 12. Full-text search
 13. OLTP vs OLAP

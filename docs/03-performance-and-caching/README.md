@@ -20,10 +20,10 @@ A query that runs in 2 milliseconds on your machine will take down a database wh
 3. Caching strategies
 4. Cache invalidation
 5. Cache stampede
-6. Load balancing
+6. Load balancing algorithms
 7. CDN and edge caching
 8. Latency and throughput
 9. P99 and tail latency
 10. Profiling and load testing
 11. Memory leaks
-12. Garbage collection
+12. Garbage collection pauses

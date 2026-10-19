@@ -18,7 +18,7 @@ In single-threaded local test runs, race conditions almost never trigger. Under 
 1. Concurrency vs parallelism
 2. Async and the event loop
 3. Race conditions
-4. Deadlocks
+4. Deadlocks and livelocks
 5. Optimistic locking
 6. Pessimistic locking
 7. Distributed locks

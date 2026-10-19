@@ -15,15 +15,15 @@ Before scaling to thousands of concurrent users, basic protocol errors, poor tim
 <!-- CONCEPT_TABLE_END -->
 
 ## Planned Topics (12)
-1. HTTP basics and status codes
-2. REST vs GraphQL
-3. Serialization (JSON and Protobuf)
+1. HTTP status codes and error semantics
+2. API contract drift and schema validation
+3. Serialization (JSON, Protobuf, and BigInt precision)
 4. Authentication vs authorization
 5. Environment config and the 12-factor app
 6. Monolith vs modular monolith vs microservices
 7. Input validation and sanitization
 8. Pagination (offset vs cursor)
-9. Time and timezones
-10. Money handling
-11. File uploads and object storage
-12. Testing strategy
+9. Time, timezones, and UTC handling
+10. Money handling and fixed-point math
+11. File uploads and presigned object storage
+12. Testing strategy (unit vs integration vs contract vs load)

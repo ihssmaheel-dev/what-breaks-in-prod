@@ -16,17 +16,17 @@ When state spans more than one machine, the network will partition, clocks will 
 
 ## Planned Topics (15)
 1. Sharding
-2. Partitioning
-3. Replication
+2. Horizontal partitioning
+3. Replication strategies
 4. Leader election
 5. CAP theorem
-6. Eventual consistency
+6. Eventual consistency and PACELC
 7. Consensus and quorum
 8. Consistent hashing
-9. Hot keys and hot partitions
-10. Distributed transactions
-11. Saga pattern
-12. Outbox pattern
-13. Network partitions
-14. Clock skew
-15. Bloom filters
+9. Hot keys and partition skew
+10. The Dual-Write problem
+11. Transactional outbox and CDC
+12. Saga pattern
+13. Distributed transactions and 2PC
+14. Network partitions and split-brain
+15. Clock skew and logical clocks

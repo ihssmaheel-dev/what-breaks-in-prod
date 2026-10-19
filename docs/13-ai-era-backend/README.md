@@ -18,5 +18,5 @@ AI features present brand new failure modes in production: astronomical token bi
 1. LLM cost and token limits
 2. Rate limits and retries for AI APIs
 3. Embeddings and vector databases
-4. Streaming responses
-5. Prompt injection
+4. Streaming responses and dropped connections
+5. Prompt injection and structured output schema enforcement

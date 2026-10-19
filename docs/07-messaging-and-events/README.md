@@ -15,10 +15,10 @@ Synchronous HTTP chains between microservices create cascading outages when one 
 <!-- CONCEPT_TABLE_END -->
 
 ## Planned Topics (7)
-1. Message queues
+1. Message queues vs streams
 2. Pub/Sub
 3. Event-driven architecture
-4. CQRS and event sourcing
-5. Dead letter queues
-6. Backpressure
-7. Cron jobs and scheduling
+4. At-least-once delivery and consumer deduplication
+5. Dead letter queues and poison pills
+6. Backpressure and consumer lag
+7. Distributed cron and leader scheduling

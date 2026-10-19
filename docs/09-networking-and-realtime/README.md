@@ -16,7 +16,7 @@ Modern real-time applications cannot rely on naive HTTP polling without exhausti
 
 ## Planned Topics (7)
 1. TCP vs UDP
-2. DNS
+2. DNS resolution, caching, and stale IP failover
 3. HTTP/2 and HTTP/3
 4. WebSockets
 5. Server-Sent Events

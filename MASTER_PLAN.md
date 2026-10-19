@@ -237,55 +237,55 @@ Your original 111 are all covered. Some were merged for clarity (TLS and both en
 
 ### 01 Foundations (12)
 
-HTTP basics and status codes, REST vs GraphQL, Serialization (JSON and Protobuf), Authentication vs authorization, Environment config and the 12-factor app, Monolith vs modular monolith vs microservices, Input validation and sanitization, Pagination (offset vs cursor), Time and timezones, Money handling, File uploads and object storage, Testing strategy.
+HTTP status codes and error semantics, API contract drift and schema validation, Serialization (JSON, Protobuf, and BigInt precision), Authentication vs authorization, Environment config and the 12-factor app, Monolith vs modular monolith vs microservices, Input validation and sanitization, Pagination (offset vs cursor), Time, timezones, and UTC handling, Money handling and fixed-point math, File uploads and presigned object storage, Testing strategy (unit vs integration vs contract vs load).
 
 ### 02 API reliability (16)
 
-Idempotency keys, Rate limiting, Reverse proxies, API gateways, Timeouts, Retries, Exponential backoff, Circuit breakers, Bulkheads, Load shedding, Graceful degradation, Webhooks, CORS, API versioning, Semantic versioning, Error handling conventions.
+Idempotency keys, Rate limiting, Reverse proxies, API gateways, Timeouts, Retries, Exponential backoff and jitter, Circuit breakers, Bulkheads, Load shedding, Graceful degradation, Webhooks, CORS and preflight request storms, API versioning and deprecation, Cascading failures and thundering herd, Error handling conventions (RFC 7807).
 
 ### 03 Performance and caching (12)
 
-Connection pooling, N+1 queries, Caching strategies, Cache invalidation, Cache stampede, Load balancing, CDN and edge caching, Latency and throughput, P99 and tail latency, Profiling and load testing, Memory leaks, Garbage collection.
+Connection pooling, N+1 queries, Caching strategies, Cache invalidation, Cache stampede, Load balancing algorithms, CDN and edge caching, Latency and throughput, P99 and tail latency, Profiling and load testing, Memory leaks, Garbage collection pauses.
 
 ### 04 Databases (13)
 
-SQL vs NoSQL, Normalization vs denormalization, ACID and isolation levels, Database indexing, Query optimization, Read replicas, Database migrations, Zero-downtime migrations, Schema versioning, Soft deletes and audit logs, Multi-tenancy, Full-text search, OLTP vs OLAP.
+SQL vs NoSQL, Normalization vs denormalization, ACID and isolation levels, Database indexing, Query optimization and EXPLAIN ANALYZE, Read replicas, Database migrations, Zero-downtime migrations (Expand/Contract), Replication lag and read-your-own-writes, Soft deletes and tombstone penalties, Multi-tenancy, Full-text search, OLTP vs OLAP.
 
 ### 05 Concurrency (9)
 
-Concurrency vs parallelism, Async and the event loop, Race conditions, Deadlocks, Optimistic locking, Pessimistic locking, Distributed locks, Thread safety, Background workers and job queues.
+Concurrency vs parallelism, Async and the event loop, Race conditions, Deadlocks and livelocks, Optimistic locking, Pessimistic locking, Distributed locks, Thread safety, Background workers and job queues.
 
 ### 06 Distributed systems (15)
 
-Sharding, Partitioning, Replication, Leader election, CAP theorem, Eventual consistency, Consensus and quorum, Consistent hashing, Hot keys and hot partitions, Distributed transactions, Saga pattern, Outbox pattern, Network partitions, Clock skew, Bloom filters.
+Sharding, Horizontal partitioning, Replication strategies, Leader election, CAP theorem, Eventual consistency and PACELC, Consensus and quorum, Consistent hashing, Hot keys and partition skew, The Dual-Write problem, Transactional outbox and CDC, Saga pattern, Distributed transactions and 2PC, Network partitions and split-brain, Clock skew and logical clocks.
 
 ### 07 Messaging and events (7)
 
-Message queues, Pub/Sub, Event-driven architecture, CQRS and event sourcing, Dead letter queues, Backpressure, Cron jobs and scheduling.
+Message queues vs streams, Pub/Sub, Event-driven architecture, At-least-once delivery and consumer deduplication, Dead letter queues and poison pills, Backpressure and consumer lag, Distributed cron and leader scheduling.
 
 ### 08 Security (17)
 
-SQL injection, XSS, CSRF, SSRF, OWASP Top 10 and broken access control, OAuth, JWT and token rotation, Password hashing, Secrets management, IAM and least privilege, MFA, TLS and encryption (at rest and in transit), Security headers and CSP, WAF, DDoS protection, Supply chain security, PII and data privacy.
+SQL injection, XSS, CSRF, SSRF, OWASP Top 10 and broken access control, OAuth 2.0 and OIDC, JWT and token rotation, Password hashing, Secrets management, IAM and least privilege, MFA, TLS and encryption (at rest and in transit), Security headers and CSP, WAF, DDoS protection, Supply chain security, PII and data privacy.
 
 ### 09 Networking and real-time (7)
 
-TCP vs UDP, DNS, HTTP/2 and HTTP/3, WebSockets, Server-Sent Events, Long polling, gRPC.
+TCP vs UDP, DNS resolution, caching, and stale IP failover, HTTP/2 and HTTP/3, WebSockets, Server-Sent Events, Long polling, gRPC.
 
 ### 10 DevOps and deployment (18)
 
-Docker, Kubernetes, Helm charts, Service discovery, CI/CD, Build caching, Infrastructure as code, Terraform, Feature flags, Blue-green deployment, Canary releases, Rolling deployments, Rollbacks, Health checks, Liveness and readiness probes, Dependency hell, Graceful shutdown, Git branching and trunk-based development.
+Docker and container images, Kubernetes primitives, Container resource limits and OOMKilled, Service discovery, CI/CD pipelines, Build caching, Infrastructure as code, Terraform drift and state locks, Feature flags and dark launches, Blue-green deployment, Canary releases and automated rollbacks, Rolling deployments, Database rollbacks, Health checks (liveness, readiness, startup), CrashLoopBackOff and dependency boot ordering, Dependency hell and lockfiles, Graceful shutdown and connection draining, Git branching and trunk-based development.
 
 ### 11 Scaling and resilience (12)
 
-Autoscaling, Horizontal vs vertical scaling, Cost optimization, Cold starts, Serverless limits, Capacity planning, Multi-region deployment, Failover, Backups, Disaster recovery, Chaos engineering, Connection exhaustion.
+Autoscaling triggers and lag, Horizontal vs vertical scaling, Cost optimization, Cold starts, Serverless limits, Capacity planning, Multi-region deployment, Automated failover, Backups and restore testing, Disaster recovery (RPO/RTO), Chaos engineering, Connection exhaustion and file descriptor limits.
 
 ### 12 Observability and operations (14)
 
-Structured logging and correlation IDs, Monitoring, Metrics, Alerts, Distributed tracing, Observability, SLIs/SLOs/SLAs, Error budgets, Production incidents, On-call, Runbooks, Postmortems, Code review, Tech debt.
+Structured logging and JSON logs, Distributed tracing and span propagation, Correlation IDs, Metrics collection and types, Metric cardinality explosion, Alerting fatigue and alert thresholds, Observability vs monitoring, SLIs/SLOs/SLAs, Error budgets, Production incidents and severity triage, On-call rotations, Runbooks and playbooks, Blameless postmortems, Tech debt and refactoring.
 
 ### 13 AI-era backend (5)
 
-LLM cost and token limits, Rate limits and retries for AI APIs, Embeddings and vector databases, Streaming responses, Prompt injection.
+LLM cost and token limits, Rate limits and retries for AI APIs, Embeddings and vector databases, Streaming responses and dropped connections, Prompt injection and structured output schema enforcement.
 
 ## 8. Launch set: the first 30 pages
 

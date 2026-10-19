@@ -21,13 +21,13 @@ In local development, networks are instantaneous and requests never fail midway.
 4. API gateways
 5. Timeouts
 6. Retries
-7. Exponential backoff
+7. Exponential backoff and jitter
 8. Circuit breakers
 9. Bulkheads
 10. Load shedding
 11. Graceful degradation
 12. Webhooks
-13. CORS
-14. API versioning
-15. Semantic versioning
-16. Error handling conventions
+13. CORS and preflight request storms
+14. API versioning and deprecation
+15. Cascading failures and thundering herd
+16. Error handling conventions (RFC 7807)
