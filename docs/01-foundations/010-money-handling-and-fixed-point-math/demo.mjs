@@ -31,25 +31,39 @@ console.log(`  Actual:   ${sum}`);
 console.log(`  Does 0.1 + 0.2 === 0.3? ${sum === 0.3}`);
 console.log('DANGER: If an automated checkout checks "if (balance === total)", it fails!\n');
 
-// --- PART 2: COMPOUNDING DRIFT IN INVOICE TOTALS ---
+// --- PART 2: COMPOUNDING DRIFT AND ROUNDING MISMATCH ---
 console.log('----------------------------------------------------------------');
-console.log('PART 2: Compounding Drift across Multiple Line Items');
+console.log('PART 2: Compounding Drift & Invoice Rounding Mismatch');
 console.log('----------------------------------------------------------------');
 
-// 10 items at $19.99 with 8.25% sales tax
-const itemPriceFloat = 19.99;
-const taxRate = 0.0825;
-const itemCount = 10;
-
-let floatTotalTax = 0;
-for (let i = 0; i < itemCount; i++) {
-  floatTotalTax += itemPriceFloat * taxRate;
+// Example A: Summing $0.10 ten times in floating-point
+let floatBalance = 0;
+for (let i = 0; i < 10; i++) {
+  floatBalance += 0.1;
 }
 
-const expectedTaxExact = (19.99 * taxRate) * 10;
-console.log(`Line item tax accumulated using floats: ${floatTotalTax}`);
-console.log(`Mathematical expectation:                ${expectedTaxExact}`);
-console.log(`Difference (Rounding Drift):             ${Math.abs(floatTotalTax - expectedTaxExact)}\n`);
+console.log('1. Float Accumulation Trap:');
+console.log('   Adding $0.10 ten times:');
+console.log(`   Expected sum: 1.0`);
+console.log(`   Actual sum:   ${floatBalance}`);
+console.log(`   Does floatBalance === 1.0? ${floatBalance === 1.0} (Drifted by 0.0000000000000001!)\n`);
+
+// Example B: The Line-Item Tax Rounding Mismatch (Classic E-Commerce Bug)
+console.log('2. The Line-Item Rounding Mismatch:');
+console.log('   Order: 10 items at $19.99 each. Tax rate: 8.25%.');
+
+// Method 1: Rounding tax on each line item (as printed on individual receipt lines)
+const singleTaxRounded = Math.round(19.99 * 0.0825 * 100) / 100; // $1.65 per item
+const totalLineTax = singleTaxRounded * 10; // $16.50
+
+// Method 2: Calculating tax on the subtotal ($199.90)
+const subtotal = 19.99 * 10; // $199.90
+const totalSubtotalTax = Math.round(subtotal * 0.0825 * 100) / 100; // $16.49
+
+console.log(`   Method A (Sum of rounded line taxes: 10 x $${singleTaxRounded.toFixed(2)}): $${totalLineTax.toFixed(2)}`);
+console.log(`   Method B (Tax on subtotal $${subtotal.toFixed(2)} x 8.25%):           $${totalSubtotalTax.toFixed(2)}`);
+console.log(`   Discrepancy: $${Math.abs(totalLineTax - totalSubtotalTax).toFixed(2)} difference!`);
+console.log('   DANGER: One penny mismatch triggers audit freezes on million-dollar ledgers.\n');
 
 // --- PART 3: THE PRODUCTION FIX (INTEGER CENTS & ALLOCATION) ---
 console.log('----------------------------------------------------------------');
@@ -58,6 +72,7 @@ console.log('----------------------------------------------------------------');
 
 // 1. Integer representation (Stripe pattern)
 // $19.99 -> 1999 cents
+const itemCount = 10;
 const itemPriceCents = 1999;
 const totalCents = itemPriceCents * itemCount; // 19990 cents ($199.90)
 
