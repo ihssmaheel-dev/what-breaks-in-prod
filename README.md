@@ -4,7 +4,7 @@
 > A zero-dependency, open-source guide teaching 157 backend and system design concepts through failure stories, real-world analogies, diagrams, and runnable code.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Concepts](https://img.shields.io/badge/concepts-12%2F157-blue)
+![Concepts](https://img.shields.io/badge/concepts-13%2F157-blue)
 ![Dependencies](https://img.shields.io/badge/dependencies-0-success)
 ![Node LTS](https://img.shields.io/badge/node-%3E%3D20-green)
 
@@ -47,7 +47,7 @@ Depending on your goal, jump directly into a curated reading path:
 | # | Category | Planned | Published | Reviewed | Draft | Progress |
 | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
 | 01 | [Foundations](docs/01-foundations/README.md) | 12 | 12 | 0 | 0 | `██████████ 100%` |
-| 02 | [API Reliability](docs/02-api-reliability/README.md) | 16 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
+| 02 | [API Reliability](docs/02-api-reliability/README.md) | 16 | 1 | 0 | 0 | `█░░░░░░░░░ 6%` |
 | 03 | [Performance & Caching](docs/03-performance-and-caching/README.md) | 12 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
 | 04 | [Databases](docs/04-databases/README.md) | 13 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
 | 05 | [Concurrency](docs/05-concurrency/README.md) | 9 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
@@ -59,7 +59,7 @@ Depending on your goal, jump directly into a curated reading path:
 | 11 | [Scaling & Resilience](docs/11-scaling-and-resilience/README.md) | 12 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
 | 12 | [Observability & Operations](docs/12-observability-and-operations/README.md) | 14 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
 | 13 | [AI-Era Backend](docs/13-ai-era-backend/README.md) | 5 | 0 | 0 | 0 | `░░░░░░░░░░ 0%` |
-| **All** | **Total** | **157** | **12** | **0** | **0** | **`█░░░░░░░░░ 8%`** |
+| **All** | **Total** | **157** | **13** | **0** | **0** | **`█░░░░░░░░░ 8%`** |
 
 <!-- PROGRESS_TABLE_END -->
 
@@ -82,6 +82,7 @@ Depending on your goal, jump directly into a curated reading path:
 | `010` | [Money Handling and Fixed-Point Math](docs/01-foundations/010-money-handling-and-fixed-point-math/README.md) | 01-foundations | `beginner` | ✅ | 🟢 Published |
 | `011` | [File Uploads and Presigned Object Storage](docs/01-foundations/011-file-uploads-and-presigned-object-storage/README.md) | 01-foundations | `beginner` | ✅ | 🟢 Published |
 | `012` | [Testing Strategy (Unit vs Integration vs Contract vs Load)](docs/01-foundations/012-testing-strategy-unit-vs-integration-vs-contract-vs-load/README.md) | 01-foundations | `beginner` | ✅ | 🟢 Published |
+| `013` | [Idempotency Keys](docs/02-api-reliability/013-idempotency-keys/README.md) | 02-api-reliability | `intermediate` | ✅ | 🟢 Published |
 
 <!-- CONCEPT_CATALOG_END -->
 

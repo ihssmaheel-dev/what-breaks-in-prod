@@ -10,7 +10,7 @@ In local development, networks are instantaneous and requests never fail midway.
 <!-- CONCEPT_TABLE_START -->
 | ID | Concept | Level | Demo | Status |
 | :--- | :--- | :---: | :---: | :---: |
-| - | _Coming soon_ | - | - | ⚪ Planned |
+| `013` | [Idempotency Keys](013-idempotency-keys/README.md) | `intermediate` | ✅ | 🟢 Published |
 
 <!-- CONCEPT_TABLE_END -->
 
